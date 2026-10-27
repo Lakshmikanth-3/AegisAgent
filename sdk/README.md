@@ -20,7 +20,7 @@ await agent.check(merchant, '0.01', invoiceId(order)); // null if allowed, else 
 await agent.pay(merchant, '0.01', invoiceId(order));   // same invoice can never be paid twice
 
 // HTTP 402: pays the quoted price from the vault and retries with proof.
-const { response } = await fetchWithPayment(agent, 'https://aegisagent.vercel.app/api/x402/arc-stats', {}, req => BigInt(req.maxAmountRequired) <= 50_000n);
+const { response } = await fetchWithPayment(agent, 'https://aegisagent-ai.vercel.app/api/x402/arc-stats', {}, req => BigInt(req.maxAmountRequired) <= 50_000n);
 ```
 
 ## What the agent key can do

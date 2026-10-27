@@ -1,6 +1,6 @@
 # AegisAgent
 
-[Public repository](https://github.com/Lakshmikanth-3/AegisAgent)
+**Live app:** https://aegisagent-ai.vercel.app/treasury (sample mode) · [Public repository](https://github.com/Lakshmikanth-3/AegisAgent)
 
 **Autonomous Enterprise Treasury & Policy Guardrail Agent**
 
@@ -104,11 +104,11 @@ Safety is what lets it act alone: suppliers sign their own payout address, the v
 
 | | |
 | --- | --- |
-| **Live app** | https://aegisagent.vercel.app/earlypay (Arc testnet) |
+| **Live app** | https://aegisagent-ai.vercel.app/earlypay (Arc testnet) |
 | **Original EarlyPay demo (pre-existing work)** | https://youtu.be/e9RG-Uaeqkw |
-| **Supplier page** (phone) | https://aegisagent.vercel.app/earlypay/supplier |
-| **Company page** | https://aegisagent.vercel.app/earlypay/buyer |
-| **Public audit** | https://aegisagent.vercel.app/earlypay/audit |
+| **Supplier page** (phone) | https://aegisagent-ai.vercel.app/earlypay/supplier |
+| **Company page** | https://aegisagent-ai.vercel.app/earlypay/buyer |
+| **Public audit** | https://aegisagent-ai.vercel.app/earlypay/audit |
 
 ---
 
@@ -202,7 +202,7 @@ flowchart LR
     P["Anyone<br/>auditor"]
   end
 
-  subgraph App["Next.js app on Vercel (aegisagent.vercel.app)"]
+  subgraph App["Next.js app on Vercel (aegisagent-ai.vercel.app)"]
     SU["/earlypay/supplier"]
     BU["/earlypay/buyer"]
     AU["/earlypay/audit"]

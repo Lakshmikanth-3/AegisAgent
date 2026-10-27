@@ -8,7 +8,7 @@ import { arcMainnet, USDC } from '../src/lib/arc/config';
 import { factoryAbi, registryAbi } from '../src/lib/arc/abi';
 import deployment from '../src/lib/arc/testnet-deployment.json';
 
-const SITE = process.env.E2E_BASE_URL ?? 'https://aegisagent.vercel.app';
+const SITE = process.env.E2E_BASE_URL ?? 'https://aegisagent-ai.vercel.app';
 const quick = process.argv.includes('--quick');
 type Result = { name: string; ok: boolean; detail: string; seconds: number };
 const results: Result[] = [];

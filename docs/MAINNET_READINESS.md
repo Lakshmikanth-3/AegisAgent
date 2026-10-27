@@ -1,6 +1,6 @@
 # Mainnet readiness report
 
-Run 2026-10-15T00:59:31.999Z against https://aegisagent.vercel.app. Testnet suites use real Arc testnet transactions; mainnet checks are read-only.
+Run 2026-10-15T00:59:31.999Z against https://aegisagent-ai.vercel.app. Testnet suites use real Arc testnet transactions; mainnet checks are read-only.
 
 | Check | Result | Detail | Time |
 | --- | --- | --- | --- |

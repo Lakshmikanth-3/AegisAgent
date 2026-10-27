@@ -36,7 +36,7 @@ async function main() {
   }
   if (!process.argv.includes('--yes')) { console.log('\nDry run. Re-run with --yes to approve the TODO suppliers.'); return; }
   if (approved) {
-    const res = await fetch('https://aegisagent.vercel.app/api/earlypay/run', { method: 'POST' }).then(r => r.json()).catch(() => undefined) as { results?: { invoice?: string; decision: string }[] } | undefined;
+    const res = await fetch('https://aegisagent-ai.vercel.app/api/earlypay/run', { method: 'POST' }).then(r => r.json()).catch(() => undefined) as { results?: { invoice?: string; decision: string }[] } | undefined;
     console.log('agent:', res?.results?.map(r => `${r.invoice} → ${r.decision}`).join(', ') || 'no change');
   }
 }

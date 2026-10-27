@@ -1,6 +1,6 @@
 // Browser end-to-end on REAL Arc testnet: Playwright clicks through the live web app with an
 // injected EIP-1193 wallet. Keys stay in this Node process; the page only sees addresses.
-// Run: pnpm arc:testnet:browser   (E2E_BASE_URL defaults to https://aegisagent.vercel.app)
+// Run: pnpm arc:testnet:browser   (E2E_BASE_URL defaults to https://aegisagent-ai.vercel.app)
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { writeFileSync } from 'node:fs';
@@ -12,7 +12,7 @@ import { arcTestnet, USDC } from '../src/lib/arc/config';
 import { vaultAbi, factoryAbi } from '../src/lib/arc/abi';
 import { director } from './arc-video';
 
-const BASE = process.env.E2E_BASE_URL ?? 'https://aegisagent.vercel.app';
+const BASE = process.env.E2E_BASE_URL ?? 'https://aegisagent-ai.vercel.app';
 const FACTORY = deployment.factory as `0x${string}`;
 const rpc = http(arcTestnet.rpcUrls.default.http[0], { retryCount: 2 });
 const p = createPublicClient({ chain: arcTestnet, transport: rpc });

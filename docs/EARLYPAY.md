@@ -2,7 +2,7 @@
 
 **Suppliers get paid in seconds instead of 60 days, an AI decides which invoices are worth paying early, and the vault makes the payment impossible to hijack.**
 
-Settlement layer built before this hackathon (declared as pre-existing). Live on **Arc testnet** at https://aegisagent.vercel.app/earlypay (supplier sign-up: https://aegisagent.vercel.app/earlypay/supplier); not deployed to mainnet.
+Settlement layer built before this hackathon (declared as pre-existing). Live on **Arc testnet** at https://aegisagent-ai.vercel.app/earlypay (supplier sign-up: https://aegisagent-ai.vercel.app/earlypay/supplier); not deployed to mainnet.
 
 ## 1. Problem
 

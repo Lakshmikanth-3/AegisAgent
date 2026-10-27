@@ -16,7 +16,7 @@ import { canonical } from '../src/lib/earlypay/log';
 import setup from '../../contracts/arc/deployments/5042002-earlypay-setup.json';
 const DEMO_VAULT = setup.vault as Hex;
 
-const BASE = 'https://aegisagent.vercel.app';
+const BASE = 'https://aegisagent-ai.vercel.app';
 const OUT = '../demo/earlypay';
 const W = 1920, H = 1080;
 const transport = http(arcTestnet.rpcUrls.default.http[0], { retryCount: 6, retryDelay: 700 });
@@ -378,7 +378,7 @@ async function main() {
     'It uses USDC for payments and gas, Arc smart contracts for the limits and the record, and a gasless relay for suppliers. Next: letting idle cash earn yield in USYC, and paying European suppliers in EURC.',
   ]);
 
-  await slideSection('close', slide(`<img class="coin" src="${BASE}/img/coin.png"><div class="k">AegisAgent</div><h2>The payables agent that <em>makes money.</em></h2><p>Live: aegisagent.vercel.app<br>Code: github.com/Lakshmikanth-3/AegisAgent<br>USDC on Arc · rules enforced by the wallet · every decision on record</p>`), [
+  await slideSection('close', slide(`<img class="coin" src="${BASE}/img/coin.png"><div class="k">AegisAgent</div><h2>The payables agent that <em>makes money.</em></h2><p>Live: aegisagent-ai.vercel.app<br>Code: github.com/Lakshmikanth-3/AegisAgent<br>USDC on Arc · rules enforced by the wallet · every decision on record</p>`), [
     'AegisAgent. The payables agent that makes money, not just pays bills. In USDC, on Arc.',
   ], 1000);
   await browser.close();

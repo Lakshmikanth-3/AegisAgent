@@ -11,7 +11,7 @@ const agent = new ArcAgent(privateKeyToAccount(AGENT_KEY), VAULT, 'testnet', {
 });
 
 // Pays the 402 invoice from the vault, then retries with proof.
-const { response } = await fetchWithPayment(agent, 'https://aegisagent.vercel.app/api/x402/arc-stats');
+const { response } = await fetchWithPayment(agent, 'https://aegisagent-ai.vercel.app/api/x402/arc-stats');
 console.log(await response.json());`;
 
 const compare = [
