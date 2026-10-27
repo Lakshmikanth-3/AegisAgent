@@ -31,7 +31,7 @@ async function main() {
 
   // Resumable: each step is skipped if its on-chain effect already exists.
   if (!await p.readContract({ address: dep.registry, abi: registryAbi, functionName: 'approved', args: [merchant] }))
-    await send('registerMerchant', { address: dep.registry, abi: registryAbi, functionName: 'setMerchant', args: [merchant, true, 'Velo402 data API'] });
+    await send('registerMerchant', { address: dep.registry, abi: registryAbi, functionName: 'setMerchant', args: [merchant, true, 'AegisAgent data API'] });
   let [vault] = await p.readContract({ address: dep.factory, abi: factoryAbi, functionName: 'vaultsOf', args: [owner.address] });
   if (!vault) {
     const created = await send('createVault', { address: dep.factory, abi: factoryAbi, functionName: 'createVault' });
@@ -50,7 +50,7 @@ async function main() {
   await p.waitForTransactionReceipt({ hash: fund }); txs.fundAgentGas = fund;
 
   // Real agent payment through the SDK: policy checked by the contract on Arc mainnet.
-  const paid = await new ArcAgent(agent, vault, 'mainnet').pay(merchant, '0.01', invoiceId({ order: 'velo402-mainnet-first-payment', at: Date.now() }));
+  const paid = await new ArcAgent(agent, vault, 'mainnet').pay(merchant, '0.01', invoiceId({ order: 'aegisagent-mainnet-first-payment', at: Date.now() }));
   txs.agentPayment = paid.hash; console.log('agentPayment', paid.hash);
 
   const out = { chainId: 5042, factory: dep.factory, registry: dep.registry, merchant, vault, owner: owner.address, agent: agent.address, deploymentHash: dep.deploymentHash, paymentHash: paid.hash, transactions: txs, deployedAt: new Date().toISOString() };

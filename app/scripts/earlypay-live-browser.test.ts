@@ -1,4 +1,4 @@
-// Live end-to-end in a real browser against https://arcsteward.vercel.app (Arc TESTNET, real transactions).
+// Live end-to-end in a real browser against https://aegisagent.vercel.app (Arc TESTNET, real transactions).
 // Supplier (phone) registers and invoices; buyer (desktop, owner wallet injected as an EIP-1193
 // provider backed by the testnet owner key) approves the supplier, the hosted agent pays early,
 // an over-limit invoice is escalated and paid by the owner, and the audit page verifies the chain.
@@ -15,7 +15,7 @@ import { fetchOffers, fetchDecisions } from '../src/lib/earlypay/chain';
 import { encodeNote, inputsHash } from '../src/lib/earlypay/log';
 import type { PublicClient } from 'viem';
 
-const BASE = process.env.EARLYPAY_BASE_URL ?? 'https://arcsteward.vercel.app';
+const BASE = process.env.EARLYPAY_BASE_URL ?? 'https://aegisagent.vercel.app';
 const transport = http(arcTestnet.rpcUrls.default.http[0], { retryCount: 6, retryDelay: 700 });
 const pub = createPublicClient({ chain: arcTestnet, transport });
 const owner = privateKeyToAccount(process.env.ARC_OWNER_PRIVATE_KEY as Hex);

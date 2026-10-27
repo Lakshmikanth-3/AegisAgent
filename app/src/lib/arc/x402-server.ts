@@ -1,4 +1,4 @@
-// Server side of the Velo402 HTTP 402 flow ("velo402-vault" scheme, x402-style).
+// Server side of the AegisAgent HTTP 402 flow ("velo402-vault" scheme, x402-style).
 // A paid request is accepted only if the transaction:
 //  1. moved real USDC (ERC-20 Transfer from the USDC contract) from a vault to this merchant for at least the price,
 //  2. came from a genuine ArcVault created by the configured factory, and
@@ -51,7 +51,7 @@ export async function verifyPayment(resource: string, txHash: Hex, invoice: stri
   if (!transfer || transfer.args.value < price) return { ok: false, reason: 'USDC transfer to merchant missing or below price' };
   const owner = await client.readContract({ address: vault, abi: vaultAbi, functionName: 'owner' });
   const vaults = await client.readContract({ address: factory, abi: factoryAbi, functionName: 'vaultsOf', args: [owner] });
-  if (!vaults.some(v => v.toLowerCase() === vault.toLowerCase())) return { ok: false, reason: 'Payment did not come from a Velo402 vault' };
+  if (!vaults.some(v => v.toLowerCase() === vault.toLowerCase())) return { ok: false, reason: 'Payment did not come from a AegisAgent vault' };
   return { ok: true, vault, agent: paid.args.agent, amount: transfer.args.value };
 }
 

@@ -5,9 +5,9 @@ import type { ArcEvent } from '../../sdk/src/index';
 
 export function describe(e: ArcEvent) {
   const who = `${e.agent.slice(0, 6)}…${e.agent.slice(-4)}`;
-  if (e.type === 'paid') return `Velo402: agent ${who} paid ${e.amount} USDC to ${e.recipient} (tx ${e.hash})`;
-  if (e.type === 'gas') return `Velo402: agent ${who} drew ${e.amount} USDC units for gas (tx ${e.hash})`;
-  return `Velo402 ALERT: vault blocked agent ${who} paying ${e.amount} USDC to ${e.recipient}: ${e.reason}`;
+  if (e.type === 'paid') return `AegisAgent: agent ${who} paid ${e.amount} USDC to ${e.recipient} (tx ${e.hash})`;
+  if (e.type === 'gas') return `AegisAgent: agent ${who} drew ${e.amount} USDC units for gas (tx ${e.hash})`;
+  return `AegisAgent ALERT: vault blocked agent ${who} paying ${e.amount} USDC to ${e.recipient}: ${e.reason}`;
 }
 
 export async function notify(e: ArcEvent) {

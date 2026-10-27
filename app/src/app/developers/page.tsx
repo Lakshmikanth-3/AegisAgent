@@ -3,7 +3,7 @@ import { ArrowUpRight, Bell, Bot, Code2, GitCompare, Landmark, Route, Scale, Use
 import { repositoryUrl } from '@/lib/arc/project';
 import deployment from '@/lib/arc/testnet-deployment.json';
 
-const sdk = `import { ArcAgent, fetchWithPayment } from '@velo402/arc-sdk';
+const sdk = `import { ArcAgent, fetchWithPayment } from '@aegisagent/arc-sdk';
 import { privateKeyToAccount } from 'viem/accounts';
 
 const agent = new ArcAgent(privateKeyToAccount(AGENT_KEY), VAULT, 'testnet', {
@@ -11,7 +11,7 @@ const agent = new ArcAgent(privateKeyToAccount(AGENT_KEY), VAULT, 'testnet', {
 });
 
 // Pays the 402 invoice from the vault, then retries with proof.
-const { response } = await fetchWithPayment(agent, 'https://velo402.vercel.app/api/x402/arc-stats');
+const { response } = await fetchWithPayment(agent, 'https://aegisagent.vercel.app/api/x402/arc-stats');
 console.log(await response.json());`;
 
 const compare = [
@@ -28,7 +28,7 @@ export default function DevelopersPage() {
   return <div className="arc-console">
     <div className="arc-page-heading"><div><span className="arc-eyebrow">DEVELOPERS / AGENTS THAT PAY</span><h1>Plug an AI agent into a vault.</h1><p>SDK, pay-per-request API, alerts and a working AI agent, all on Arc.</p></div><a className="arc-badge" href={`${repositoryUrl}/tree/main/sdk`} target="_blank" rel="noreferrer">SDK source <ArrowUpRight size={13} /></a></div>
     <div className="arc-info-grid">
-      <section className="full-width"><div className="arc-panel-head"><span className="arc-panel-icon"><Code2 size={18} /></span><div><h2>Agent SDK quickstart</h2><p>@velo402/arc-sdk · TypeScript · viem</p></div></div><pre className="arc-code">{sdk}</pre>
+      <section className="full-width"><div className="arc-panel-head"><span className="arc-panel-icon"><Code2 size={18} /></span><div><h2>Agent SDK quickstart</h2><p>@aegisagent/arc-sdk · TypeScript · viem</p></div></div><pre className="arc-code">{sdk}</pre>
         <p>The agent key can only call <code>pay()</code> and <code>topUpGas()</code>. <code>check()</code> previews a payment against the live contract; <code>ensureGas()</code> refills the agent&apos;s gas from its allowance; <code>invoiceId()</code> hashes an order so it can never be paid twice.</p></section>
       <section><div className="arc-panel-head"><span className="arc-panel-icon"><Route size={18} /></span><div><h2>HTTP 402 pay-per-request</h2><p>x402-style, scheme velo402-vault</p></div></div><ol className="arc-flow">
         <li>The agent calls a paid endpoint and gets <code>402</code> with an invoice, price and merchant address.</li>

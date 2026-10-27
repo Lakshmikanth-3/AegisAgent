@@ -5,7 +5,7 @@ Record on Arc testnet. Before recording: run `pnpm earlypay:stats` for current n
 | Time | Screen | Say |
 | --- | --- | --- |
 | 0:00–0:25 | `/earlypay` landing, the three numbers | "Suppliers wait 60 days to get paid. 47% of US small businesses have invoices more than 30 days overdue. Meanwhile buyers' cash sits idle, and $2.77 billion was lost in the US in 2024 to fake 'our bank details changed' emails. Now companies want AI agents paying bills: the perfect target for that fraud." |
-| 0:25–0:45 | Landing hero, then "How it works" | "ArcSteward EarlyPay is an AI treasury agent that pays supplier invoices early in exchange for a discount, only when the math beats holding the cash, through a vault whose limits it cannot break." |
+| 0:25–0:45 | Landing hero, then "How it works" | "AegisAgent EarlyPay is an AI treasury agent that pays supplier invoices early in exchange for a discount, only when the math beats holding the cash, through a vault whose limits it cannot break." |
 | 0:45–1:05 | Phone: `/earlypay/supplier` | Register in one tap (name and wallet address, no gas). Send invoice: 1 USDC, due in 60 days, 2% discount. Point at "Paid today: 0.98 USDC… 12.17% a year". Sign and send. |
 | 1:05–1:25 | `/earlypay/buyer` | "The supplier is new, so the agent escalates: two-key rule." Click **Approve supplier**, then **Run the agent now**. The invoice turns PAID; read the agent's reason: "12.17% APR above the 6.5% hurdle, runway OK, supplier verified." Open the explorer link: settled in about a second. |
 | 1:25–1:35 | Buyer queue | A 0.5% / 60-day invoice: HOLD. "3% a year is below the hurdle; it even proposes the discount that would work." |
@@ -20,5 +20,5 @@ Record on Arc testnet. Before recording: run `pnpm earlypay:stats` for current n
 
 - **Agentic sophistication (30%):** the agent weighs discount APR against hold yield, liquidity runway and risk flags, explains every decision in writing, proposes counter-discounts, and escalates only what needs a human. The LLM chooses within a deterministic ceiling; the vault enforces limits regardless.
 - **Traction (30%):** numbers from `pnpm earlypay:stats` (chain events only; real usage reported separately from automated tests).
-- **Circle tools (20%):** Arc, USDC (payments and gas), the ArcSteward vault for programmable limits; USYC as the hold yield (simulated on testnet pending allowlisting); EURC on the roadmap.
+- **Circle tools (20%):** Arc, USDC (payments and gas), the AegisAgent vault for programmable limits; USYC as the hold yield (simulated on testnet pending allowlisting); EURC on the roadmap.
 - **Innovation (20%):** instant, AI-decided early payment with on-chain limits and an anti-redirection supplier registry (self-signed payout, cooldown, two-key approval) plus a verifiable decision log.

@@ -27,7 +27,7 @@ const send = async (account: typeof owner, req: Parameters<ReturnType<typeof cre
 };
 
 async function main() {
-await send(deployer, { address: dep.registry, abi: registryAbi, functionName: 'setMerchant', args: [merchant, true, 'Velo402 demo data API'] } as never);
+await send(deployer, { address: dep.registry, abi: registryAbi, functionName: 'setMerchant', args: [merchant, true, 'AegisAgent demo data API'] } as never);
 const created = await send(owner, { address: dep.factory, abi: factoryAbi, functionName: 'createVault' } as never);
 const vault = parseEventLogs({ abi: factoryAbi, eventName: 'VaultCreated', logs: created.logs })[0].args.vault;
 await send(owner, { address: USDC, abi: erc20Abi, functionName: 'approve', args: [vault, 500_000n] } as never);

@@ -2,7 +2,7 @@ import type { Hex } from 'viem';
 import { ArcAgent, invoiceId } from './agent';
 import { displayUsdc } from './config';
 
-/** HTTP 402 challenge served by a Velo402-enabled API ("velo402-vault" scheme, x402-style). */
+/** HTTP 402 challenge served by a AegisAgent-enabled API ("velo402-vault" scheme, x402-style). */
 export type PaymentRequirement = { scheme: 'velo402-vault'; network: 'arc' | 'arc-testnet'; payTo: string; maxAmountRequired: string; asset: string; resource: string; description: string; invoice: string };
 export type Challenge = { x402Version: 1; error?: string; accepts: PaymentRequirement[] };
 export const PAYMENT_HEADER = 'X-PAYMENT';

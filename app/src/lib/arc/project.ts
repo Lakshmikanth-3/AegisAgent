@@ -1,4 +1,4 @@
 export const projectDescription = 'AegisAgent gives autonomous AI agents restricted authority to spend USDC through an owner-controlled vault. Owners define spending limits, authorized recipients and expiration rules, and can revoke permissions. The Arc deployment provides programmable, policy-enforced payments with verifiable on-chain transactions.';
 export const repositoryUrl = 'https://github.com/Lakshmikanth-3/AegisAgent';
-export const liveAppUrl = 'https://velo402.vercel.app';
+export const liveAppUrl = 'https://aegisagent.vercel.app';
 export const builderProfileUrl = 'https://github.com/Lakshmikanth-3';

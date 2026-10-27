@@ -10,7 +10,7 @@ async function main() {
     const agentKey = generatePrivateKey();
     const owner = privateKeyToAccount(ownerKey);
     const agent = privateKeyToAccount(agentKey);
-    const lines = ['# Disposable Arc TESTNET signers only. Never fund on mainnet. Never commit or share this file.', 'ARC_NETWORK=testnet', `ARC_RPC_URL=${arcTestnet.rpcUrls.default.http[0]}`, `ARC_DEPLOYER_ADDRESS=${owner.address}`, `ARC_DEPLOYER_PRIVATE_KEY=${ownerKey}`, `ARC_OWNER_PRIVATE_KEY=${ownerKey}`, `ARC_AGENT_PRIVATE_KEY=${agentKey}`, `ARC_PAYMENT_RECIPIENT=${owner.address}`, 'ARC_SMOKE_USDC=0.01', `ARC_PAYMENT_ID=velo402-testnet-${Date.now()}`, 'ARC_MAINNET_CONFIRM='];
+    const lines = ['# Disposable Arc TESTNET signers only. Never fund on mainnet. Never commit or share this file.', 'ARC_NETWORK=testnet', `ARC_RPC_URL=${arcTestnet.rpcUrls.default.http[0]}`, `ARC_DEPLOYER_ADDRESS=${owner.address}`, `ARC_DEPLOYER_PRIVATE_KEY=${ownerKey}`, `ARC_OWNER_PRIVATE_KEY=${ownerKey}`, `ARC_AGENT_PRIVATE_KEY=${agentKey}`, `ARC_PAYMENT_RECIPIENT=${owner.address}`, 'ARC_SMOKE_USDC=0.01', `ARC_PAYMENT_ID=aegisagent-testnet-${Date.now()}`, 'ARC_MAINNET_CONFIRM='];
     writeFileSync(path, lines.join('\n') + '\n', { flag: 'wx', mode: 0o600 });
     mkdirSync('../contracts/arc/deployments', { recursive: true });
     writeFileSync('../contracts/arc/deployments/testnet-wallets.json', JSON.stringify({ chainId: arcTestnet.id, owner: owner.address, agent: agent.address, recipient: owner.address, warning: 'Dedicated testnet accounts. No deployment or payment evidence yet.' }, null, 2));

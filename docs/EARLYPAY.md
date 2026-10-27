@@ -1,8 +1,8 @@
-# ArcSteward EarlyPay
+# AegisAgent EarlyPay
 
 **Suppliers get paid in seconds instead of 60 days, an AI decides which invoices are worth paying early, and the vault makes the payment impossible to hijack.**
 
-Built during the Tameion Agents Hackathon (Sep 27 – Oct 17, 2026) on top of the existing ArcSteward vault. Live on **Arc testnet** at https://arcsteward.vercel.app/earlypay (supplier sign-up: https://arcsteward.vercel.app/earlypay/supplier); not deployed to mainnet.
+Settlement layer built before this hackathon (declared as pre-existing). Live on **Arc testnet** at https://aegisagent.vercel.app/earlypay (supplier sign-up: https://aegisagent.vercel.app/earlypay/supplier); not deployed to mainnet.
 
 ## 1. Problem
 
@@ -79,7 +79,7 @@ The LLM (OpenAI-compatible; Groq `gpt-oss-120b` by default) receives the compute
 | --- | --- | --- |
 | **Arc** | Settlement layer; sub-second finality makes "paid today" mean now | testnet |
 | **USDC** | Invoices, discounts, limits and payouts; also Arc's gas token, so the agent and relayer need nothing else | testnet |
-| **ArcSteward vault** | On-chain per-payment, daily and total limits plus recipient allowlist for the agent | testnet (also live on mainnet from earlier work) |
+| **AegisAgent vault** | On-chain per-payment, daily and total limits plus recipient allowlist for the agent | testnet (also live on mainnet from earlier work) |
 | **USYC** | Yield on idle cash, the "hold" side of every decision | **Simulated.** USYC is on Arc testnet (token `0xe9185F0c5F296Ed1797AaE4238D26CCaBEadb86C`, Teller `0x9fdF14c5B14173D74C08Af27AebFf39240dC105A`) but minting requires Circle allowlisting (support ticket, 24–48 h). The hold yield is a configurable rate labelled "simulated" in the UI, decision notes and docs. |
 | **EURC** | European suppliers paid in euros | **Next.** ArcVault holds USDC only, so EURC would move outside the vault; not built into the core flow. |
 

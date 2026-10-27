@@ -8,7 +8,7 @@ import { arcMainnet, USDC } from '../src/lib/arc/config';
 import { factoryAbi, registryAbi } from '../src/lib/arc/abi';
 import deployment from '../src/lib/arc/testnet-deployment.json';
 
-const SITE = process.env.E2E_BASE_URL ?? 'https://velo402.vercel.app';
+const SITE = process.env.E2E_BASE_URL ?? 'https://aegisagent.vercel.app';
 const quick = process.argv.includes('--quick');
 type Result = { name: string; ok: boolean; detail: string; seconds: number };
 const results: Result[] = [];
@@ -30,7 +30,7 @@ function record(name: string, ok: boolean, detail: string) { results.push({ name
 
 async function main() {
   const T = { ...testnetEnv, ARC_NETWORK: 'testnet', ARC_VAULT_ADDRESS: deployment.vault, X402_BASE_URL: SITE, E2E_BASE_URL: SITE };
-  console.log(`Velo402 mainnet readiness · testnet suites against ${SITE}\n`);
+  console.log(`AegisAgent mainnet readiness · testnet suites against ${SITE}\n`);
 
   // 1. Code health
   run('TypeScript typecheck', 'npx tsc --noEmit');

@@ -1,13 +1,13 @@
-# @velo402/arc-sdk
+# @aegisagent/arc-sdk
 
-Agent SDK for [Velo402](https://github.com/Lakshmikanth-3/velo-arc) vaults on Arc. An AI agent gets its own key and a budget; the vault contract enforces the owner's policy on every payment.
+Agent SDK for [AegisAgent](https://github.com/Lakshmikanth-3/AegisAgent) vaults on Arc. An AI agent gets its own key and a budget; the vault contract enforces the owner's policy on every payment.
 
 ```bash
-npm install @velo402/arc-sdk viem
+npm install @aegisagent/arc-sdk viem
 ```
 
 ```ts
-import { ArcAgent, fetchWithPayment, invoiceId } from '@velo402/arc-sdk';
+import { ArcAgent, fetchWithPayment, invoiceId } from '@aegisagent/arc-sdk';
 import { privateKeyToAccount } from 'viem/accounts';
 
 const agent = new ArcAgent(privateKeyToAccount(process.env.AGENT_KEY), VAULT_ADDRESS, 'testnet', {
@@ -20,7 +20,7 @@ await agent.check(merchant, '0.01', invoiceId(order)); // null if allowed, else 
 await agent.pay(merchant, '0.01', invoiceId(order));   // same invoice can never be paid twice
 
 // HTTP 402: pays the quoted price from the vault and retries with proof.
-const { response } = await fetchWithPayment(agent, 'https://velo402.vercel.app/api/x402/arc-stats', {}, req => BigInt(req.maxAmountRequired) <= 50_000n);
+const { response } = await fetchWithPayment(agent, 'https://aegisagent.vercel.app/api/x402/arc-stats', {}, req => BigInt(req.maxAmountRequired) <= 50_000n);
 ```
 
 ## What the agent key can do

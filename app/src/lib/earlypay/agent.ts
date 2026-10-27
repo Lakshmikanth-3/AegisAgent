@@ -1,8 +1,8 @@
-// ArcSteward EarlyPay treasury agent (library; used by the CLI and the API route).
+// AegisAgent EarlyPay treasury agent (library; used by the CLI and the API route).
 // Reads supplier offers for one vault from EarlyPayLedger, decides PAY_EARLY / HOLD /
 // ESCALATE / REJECT, records each decision in the hash-chained ledger log, pays early
 // through ArcVault.pay, links the settlement, and alerts the owner.
-// Payment semantics match @velo402/arc-sdk: simulate against the live contract first,
+// Payment semantics match @aegisagent/arc-sdk: simulate against the live contract first,
 // a refusal is never sent, and a submitted payment is never retried automatically.
 import { BaseError, ContractFunctionRevertedError, createPublicClient, createWalletClient, http, type PublicClient } from 'viem';
 import { privateKeyToAccount, type PrivateKeyAccount } from 'viem/accounts';
@@ -67,7 +67,7 @@ export class EarlyPayAgent {
   /** Pays through the vault. Never retried: on a timeout, reconcile the hash before trying again. */
   async pay(recipient: Hex, amount: bigint, paymentId: Hex) {
     const refusal = await this.checkPay(recipient, amount, paymentId);
-    if (refusal) { void this.notify(`ArcSteward EarlyPay: vault blocked a payment of ${usdc(amount)} USDC to ${recipient} (${refusal}).`); throw new Error(`Vault refused: ${refusal}`); }
+    if (refusal) { void this.notify(`AegisAgent EarlyPay: vault blocked a payment of ${usdc(amount)} USDC to ${recipient} (${refusal}).`); throw new Error(`Vault refused: ${refusal}`); }
     const { request } = await this.pub.simulateContract({ account: this.account, address: this.vault, abi: vaultAbi, functionName: 'pay', args: [recipient, amount, paymentId] });
     const hash = await this.wallet.writeContract(request);
     const receipt = await this.pub.waitForTransactionReceipt({ hash, timeout: 90_000 }).catch(() => { throw new Error(`Payment ${hash} submitted; receipt unavailable. Reconcile before retrying.`); });
@@ -167,7 +167,7 @@ export class EarlyPayAgent {
           r.settlementTx = await this.write('recordSettlement', [this.vault, item.offer.invoiceHash, item.offer.payout, result.payoutUnits, r.paymentTx]);
           settled.add(item.offer.invoiceHash.toLowerCase());
         }
-        if (decision === 'ESCALATE' || decision === 'REJECT') await this.notify(`ArcSteward EarlyPay ${decision}: invoice ${item.meta.number ?? item.offer.invoiceHash.slice(0, 10)} from ${item.offer.supplier} for ${usdc(item.offer.faceAmount)} USDC. ${r.reason}`);
+        if (decision === 'ESCALATE' || decision === 'REJECT') await this.notify(`AegisAgent EarlyPay ${decision}: invoice ${item.meta.number ?? item.offer.invoiceHash.slice(0, 10)} from ${item.offer.supplier} for ${usdc(item.offer.faceAmount)} USDC. ${r.reason}`);
         results.push(r); log(r);
       } catch (e) {
         const r = { ...base, decision: 'ERROR', error: e instanceof Error ? e.message.slice(0, 300) : String(e) };

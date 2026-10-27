@@ -7,7 +7,7 @@ import type { Hex } from 'viem';
 import deployment from '../src/lib/arc/testnet-deployment.json';
 import { ArcAgent, fetchWithPayment, encodePayment, PAYMENT_HEADER } from '../agent/arc-sdk';
 
-const BASE = process.env.X402_BASE_URL ?? 'https://velo402.vercel.app';
+const BASE = process.env.X402_BASE_URL ?? 'https://aegisagent.vercel.app';
 const agent = new ArcAgent(privateKeyToAccount(process.env.ARC_AGENT_PRIVATE_KEY as Hex), deployment.vault, 'testnet');
 const get = (path: string, proof?: { txHash: Hex; invoice: string }) => fetch(`${BASE}${path}`, { headers: proof ? { [PAYMENT_HEADER]: encodePayment(proof) } : {} });
 

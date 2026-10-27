@@ -8,7 +8,7 @@ for (const path of ['/', '/arc', '/testnet', '/infrastructure', '/security', '/d
     page.on('pageerror', e => errors.push(e.message));
     const res = await page.goto(path);
     expect(res?.status()).toBe(200);
-    await expect(page.locator('body')).toContainText(/Velo402|Arc/);
+    await expect(page.locator('body')).toContainText(/AegisAgent|Arc/);
     expect(errors).toEqual([]);
   });
 }

@@ -24,7 +24,7 @@ The structured assessment API and UI return PAY_EARLY, HOLD, REJECT or ESCALATE.
 The rebrand, live enterprise reconciliation, Nightshift transport, World Model integration, critic feedback, structured judging API and UI, credential-free sample mode, generated evidence and example outputs, Docker packaging, and new submission materials were added for this extension.
 
 ## Pre-existing work declaration
-ArcSteward / Velo402 supplied the original Arc vault contracts, signatures, SDK, supplier/buyer flow, deterministic early-payment mathematics and hash-linked settlement audit. This pre-existing architecture must be declared in the submission form. Wildcard judging should assess the new work described above.
+the earlier settlement layer supplied the original Arc vault contracts, signatures, SDK, supplier/buyer flow, deterministic early-payment mathematics and hash-linked settlement audit. This pre-existing architecture must be declared in the submission form. Wildcard judging should assess the new work described above.
 
 ## Reproducibility
 README.md contains install, sample, API, live sponsor setup, source registration, Engine conformance, tests and Docker commands. Four sample inputs produce computed outputs and generated JSONL traces without credentials. A changed amount or supplier changes the computed decision.

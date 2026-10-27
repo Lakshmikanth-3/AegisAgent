@@ -1,4 +1,4 @@
-// Records the ArcSteward EarlyPay demo video (≤3 min, burned-in subtitles, visible cursor)
+// Records the AegisAgent EarlyPay demo video (≤3 min, burned-in subtitles, visible cursor)
 // against the LIVE site on Arc TESTNET with real transactions, then joins clips with ffmpeg.
 // Usage: pnpm earlypay:demo:video   (env: .env.arc-testnet for ARC_OWNER_PRIVATE_KEY)
 import { mkdirSync, readdirSync, writeFileSync, rmSync, existsSync } from 'node:fs';
@@ -16,7 +16,7 @@ import { canonical } from '../src/lib/earlypay/log';
 import setup from '../../contracts/arc/deployments/5042002-earlypay-setup.json';
 const DEMO_VAULT = setup.vault as Hex;
 
-const BASE = 'https://arcsteward.vercel.app';
+const BASE = 'https://aegisagent.vercel.app';
 const OUT = '../demo/earlypay';
 const W = 1920, H = 1080;
 const transport = http(arcTestnet.rpcUrls.default.http[0], { retryCount: 6, retryDelay: 700 });
@@ -197,8 +197,8 @@ async function main() {
   const has = async (p: Page, n: string, re: RegExp) => re.test(await row(p, n).innerText().catch(() => ''));
 
   // ── The story: the problem, then the real flow on Arc (≈5 min, meant to be sped up) ──
-  await slideSection('problem', slide(`<img class="coin" src="${BASE}/img/coin.png"><div class="k">ArcSteward EarlyPay</div><h2>The payables agent that <em>makes money,</em> not just pays bills.</h2><div class="rows"><div><b>The money</b><span>2% off for paying 60 days early is about 12% a year. Idle cash earns about 4.5%.</span></div><div><b>The problem</b><span>nobody checks every invoice for that, and letting an AI pay is risky: "bank account changed" scams cost US businesses $2.77 billion in 2024 (FBI)</span></div><div><b>Suppliers wait</b><span>47% of US small businesses are owed money more than 30 days late (QuickBooks 2025)</span></div></div>`), [
-    'ArcSteward is the payables agent that makes money, not just pays bills. It reads supplier offers to be paid early for a discount, and decides, invoice by invoice, whether paying early earns more than holding the cash.',
+  await slideSection('problem', slide(`<img class="coin" src="${BASE}/img/coin.png"><div class="k">AegisAgent EarlyPay</div><h2>The payables agent that <em>makes money,</em> not just pays bills.</h2><div class="rows"><div><b>The money</b><span>2% off for paying 60 days early is about 12% a year. Idle cash earns about 4.5%.</span></div><div><b>The problem</b><span>nobody checks every invoice for that, and letting an AI pay is risky: "bank account changed" scams cost US businesses $2.77 billion in 2024 (FBI)</span></div><div><b>Suppliers wait</b><span>47% of US small businesses are owed money more than 30 days late (QuickBooks 2025)</span></div></div>`), [
+    'AegisAgent is the payables agent that makes money, not just pays bills. It reads supplier offers to be paid early for a discount, and decides, invoice by invoice, whether paying early earns more than holding the cash.',
     'Two percent off for paying sixty days early is about twelve percent a year. Idle cash earns about four and a half. When the deal is good, the agent pays in seconds on Arc. When it is not, it holds, and makes a counter-offer.',
     'Why does no company do this today? Checking every invoice by hand takes too long, and letting an AI move money is risky. Fake bank account change emails alone cost US businesses two point seven seven billion dollars in 2024.',
     'So the agent works inside a wallet on Arc that only pays approved suppliers, within the company\'s limits, and every decision is recorded in public. Here is the real product, live.',
@@ -378,8 +378,8 @@ async function main() {
     'It uses USDC for payments and gas, Arc smart contracts for the limits and the record, and a gasless relay for suppliers. Next: letting idle cash earn yield in USYC, and paying European suppliers in EURC.',
   ]);
 
-  await slideSection('close', slide(`<img class="coin" src="${BASE}/img/coin.png"><div class="k">ArcSteward</div><h2>The payables agent that <em>makes money.</em></h2><p>Live: arcsteward.vercel.app<br>Code: github.com/Lakshmikanth-3/ArcSteward<br>USDC on Arc · rules enforced by the wallet · every decision on record</p>`), [
-    'ArcSteward. The payables agent that makes money, not just pays bills. In USDC, on Arc.',
+  await slideSection('close', slide(`<img class="coin" src="${BASE}/img/coin.png"><div class="k">AegisAgent</div><h2>The payables agent that <em>makes money.</em></h2><p>Live: aegisagent.vercel.app<br>Code: github.com/Lakshmikanth-3/AegisAgent<br>USDC on Arc · rules enforced by the wallet · every decision on record</p>`), [
+    'AegisAgent. The payables agent that makes money, not just pays bills. In USDC, on Arc.',
   ], 1000);
   await browser.close();
 
@@ -416,17 +416,17 @@ async function main() {
   // Subtitles (SRT) from the narration timings.
   const ts = (x: number) => { const ms = Math.max(0, Math.round(x * 1000)); const h = Math.floor(ms / 3.6e6), m = Math.floor(ms / 6e4) % 60, s2 = Math.floor(ms / 1000) % 60; return `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}:${String(s2).padStart(2, '0')},${String(ms % 1000).padStart(3, '0')}`; };
   const srt = timed.map((q, k) => { const next = timed[k + 1]?.at ?? total; return `${k + 1}\n${ts(q.at)} --> ${ts(Math.min(next - 0.05, q.at + q.dur + 0.8))}\n${q.text}\n`; }).join('\n');
-  writeFileSync(`${OUT}/ArcSteward_EarlyPay_Demo.srt`, srt);
+  writeFileSync(`${OUT}/AegisAgent_EarlyPay_Demo.srt`, srt);
 
   // Burn subtitles and mix narration (each line delayed to its cue).
-  const final = `${OUT}/ArcSteward_EarlyPay_Demo.mp4`;
+  const final = `${OUT}/AegisAgent_EarlyPay_Demo.mp4`;
   const audioIn = timed.flatMap(q => ['-i', q.wav]);
   const delays = timed.map((q, k) => `[${k + 1}:a]adelay=${Math.round(q.at * 1000)}|${Math.round(q.at * 1000)},aresample=48000[a${k}]`).join(';');
   const mix = `${delays};${timed.map((_, k) => `[a${k}]`).join('')}amix=inputs=${timed.length}:normalize=0,apad[a]`;
   const style = "Fontname=Arial,Fontsize=17,PrimaryColour=&H00F4EDE4,BackColour=&H90120C08,OutlineColour=&H90120C08,BorderStyle=3,Outline=6,Shadow=0,MarginV=34";
   execFileSync('ffmpeg', ['-y', '-loglevel', 'error', '-i', 'raw/joined.mp4', ...audioIn.map(a => a.startsWith(`${OUT}/`) ? a.slice(OUT.length + 1) : a),
-    '-filter_complex', `[0:v]subtitles=ArcSteward_EarlyPay_Demo.srt:force_style='${style}'[v];${mix}`,
-    '-map', '[v]', '-map', '[a]', '-t', total.toFixed(2), '-c:v', 'libx264', '-preset', 'medium', '-crf', '20', '-c:a', 'aac', '-b:a', '160k', '-movflags', '+faststart', 'ArcSteward_EarlyPay_Demo.mp4'], { cwd: OUT });
+    '-filter_complex', `[0:v]subtitles=AegisAgent_EarlyPay_Demo.srt:force_style='${style}'[v];${mix}`,
+    '-map', '[v]', '-map', '[a]', '-t', total.toFixed(2), '-c:v', 'libx264', '-preset', 'medium', '-crf', '20', '-c:a', 'aac', '-b:a', '160k', '-movflags', '+faststart', 'AegisAgent_EarlyPay_Demo.mp4'], { cwd: OUT });
   console.log(`\nVideo: ${final} · ${total.toFixed(1)} s · ${timed.length} narrated subtitles${total > 180 ? ' · WARNING: over 3 minutes' : ''}`);
 }
 main().catch(async e => { console.error(e); try { await browser?.close(); } catch { /* */ } process.exit(1); });

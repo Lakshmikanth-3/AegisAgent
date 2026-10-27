@@ -1,7 +1,7 @@
 {
-  "name": "@velo402/arc-sdk",
+  "name": "@aegisagent/arc-sdk",
   "version": "0.2.0",
-  "description": "Agent SDK for Velo402 vaults on Arc: policy-enforced USDC payments and HTTP 402 pay-per-request.",
+  "description": "Agent SDK for AegisAgent vaults on Arc: policy-enforced USDC payments and HTTP 402 pay-per-request.",
   "license": "MIT",
   "type": "module",
   "main": "dist/index.js",

@@ -88,9 +88,9 @@ For live mode use `--env-file app/.env.local` and set METERLESS_BASE_URL / ZETAR
 
 ## Submission and provenance
 
-This project extends **ArcSteward / Velo402**, built before this event. Declare pre-existing work in the submission form. New work includes the rebrand, live Zetaris reconciliation, Nightshift provider, World Model integration, role feedback, structured assessment API/UI, cached-data judging mode, generated traces/examples, Docker packaging and submission materials. [Submission text](docs/SUBMISSION.md) and [demo script](docs/HACKATHON_DEMO_SCRIPT.md) describe the new work.
+The on-chain settlement layer (vault contracts, signatures, SDK, supplier/buyer flow and early-payment maths) was built before the build window and is declared as pre-existing work in the submission form. New work includes live Zetaris reconciliation, Nightshift provider, World Model integration, role feedback, structured assessment API/UI, cached-data judging mode, generated traces/examples, Docker packaging and submission materials. [Submission text](docs/SUBMISSION.md) and [demo script](docs/HACKATHON_DEMO_SCRIPT.md) describe the new work.
 
-Published historical deployment links below refer to the original application. Submission through HackOS remains an owner action. Confirm roster, select exactly one track, upload the video/deck and declare pre-existing work before submission. The supplied deadline is 27 October 2026 23:45 UTC (28 October 05:15 IST).
+Submission through HackOS remains an owner action. Confirm roster, select exactly one track, upload the video/deck and declare pre-existing work before submission. The supplied deadline is 27 October 2026 23:45 UTC (28 October 05:15 IST).
 
 ---
 
@@ -104,12 +104,11 @@ Safety is what lets it act alone: suppliers sign their own payout address, the v
 
 | | |
 | --- | --- |
-| **Live app** | https://arcsteward.vercel.app/earlypay (Arc testnet) |
+| **Live app** | https://aegisagent.vercel.app/earlypay (Arc testnet) |
 | **Original EarlyPay demo (pre-existing work)** | https://youtu.be/e9RG-Uaeqkw |
-| **Supplier page** (phone) | https://arcsteward.vercel.app/earlypay/supplier |
-| **Company page** | https://arcsteward.vercel.app/earlypay/buyer |
-| **Public audit** | https://arcsteward.vercel.app/earlypay/audit |
-| **Original deployment** | Tameion Agents Hackathon (Canteen × Circle × Arc); this submission extends that work |
+| **Supplier page** (phone) | https://aegisagent.vercel.app/earlypay/supplier |
+| **Company page** | https://aegisagent.vercel.app/earlypay/buyer |
+| **Public audit** | https://aegisagent.vercel.app/earlypay/audit |
 
 ---
 
@@ -203,7 +202,7 @@ flowchart LR
     P["Anyone<br/>auditor"]
   end
 
-  subgraph App["Next.js app on Vercel (arcsteward.vercel.app)"]
+  subgraph App["Next.js app on Vercel (aegisagent.vercel.app)"]
     SU["/earlypay/supplier"]
     BU["/earlypay/buyer"]
     AU["/earlypay/audit"]
@@ -360,7 +359,7 @@ sdk/                    agent SDK
 docs/                   EarlyPay design, traction, submission
 ```
 
-> Formerly **Velo402**. The SDK package (`@velo402/arc-sdk`) and HTTP 402 scheme (`velo402-vault`) keep their original identifiers so deployed agents keep working.
+> The HTTP 402 scheme id and the EIP-712 signing name are protocol identifiers of the already-deployed contracts and are kept unchanged so existing agents and signatures keep working.
 
 ## License
 

@@ -31,7 +31,7 @@ Reviewed 27 October 2026 against the supplied Welcome Guide and Pre-Submission S
 - Docker production build: passed after including the existing SDK and contract dependencies.
 - Docker runtime API with networking disabled and no credentials: PAY_EARLY, HOLD, REJECT, ESCALATE, plus invalid-input HTTP 400.
 - Browser recording: no page errors; actual live API responses captured in submission/browser-evidence.json.
-- Pattern scan of candidate source/text files and all 79 pre-existing Git revisions in the original ArcSteward checkout: no provider-key/private-key-marker matches found. Exact current local token/password values were also checked against candidate text files with no matches. This is a scoped scan, not a guarantee about every possible historical secret format.
+- Pattern scan of candidate source/text files and all 79 pre-existing Git revisions in the original AegisAgent checkout: no provider-key/private-key-marker matches found. Exact current local token/password values were also checked against candidate text files with no matches. This is a scoped scan, not a guarantee about every possible historical secret format.
 
 Zetaris login JWT expiration initially surfaced as HTTP 400. The client now renews expired JWTs proactively, and the regression test verifies renewal, request correlation and cursor cleanup. Some genuine model requests can fail or return malformed JSON; the visible audit flags deterministic fallback. Generated successful live examples separately record accepted Nemotron decisions for all four outcomes.
 
@@ -49,7 +49,7 @@ The new assessment endpoint does not verify chain signatures or submit payments.
 
 1. Review the source published to https://github.com/Lakshmikanth-3/AegisAgent. Videos, screenshots, slide binaries and compiled contract outputs are intentionally excluded from source publication; the submission media remains available locally.
 2. Confirm HackOS registration and the exact team roster before the first submission locks it.
-3. Select exactly one track: Wildcard [Tinkerer]. Declare ArcSteward / Velo402 as pre-existing work; docs/SUBMISSION.md provides the wording.
+3. Select exactly one track: Wildcard [Tinkerer]. Declare the earlier settlement layer as pre-existing work; docs/SUBMISSION.md provides the wording.
 4. Upload the final deck and video, verify public viewing access, and submit the repository link and sponsor explanation on HackOS.
 
 The supplied deadline is 27 October 2026, 23:45 UTC: **28 October 2026, 05:15 IST**. Registration eligibility, team membership, portal selection and submission are not inferred from completed code.
