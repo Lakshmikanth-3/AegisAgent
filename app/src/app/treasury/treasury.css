@@ -10,3 +10,4 @@
 .tr-run{font-family:inherit;letter-spacing:.5px}.tr-run:hover{background:#b8561f}
 .tr-audit strong,.tr-trace strong{font-family:var(--font-serif),"Instrument Serif",serif;font-size:20px;font-weight:400}
 .tr-tabs button{font-family:inherit}
+.tr-nav .tr-brand{font-size:30px;gap:12px}.tr-nav .tr-brand svg{width:24px;height:24px}
