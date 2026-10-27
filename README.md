@@ -105,7 +105,6 @@ Safety is what lets it act alone: suppliers sign their own payout address, the v
 | | |
 | --- | --- |
 | **Live app** | https://aegisagent-ai.vercel.app/earlypay (Arc testnet) |
-| **Original EarlyPay demo (pre-existing work)** | https://youtu.be/e9RG-Uaeqkw |
 | **Supplier page** (phone) | https://aegisagent-ai.vercel.app/earlypay/supplier |
 | **Company page** | https://aegisagent-ai.vercel.app/earlypay/buyer |
 | **Public audit** | https://aegisagent-ai.vercel.app/earlypay/audit |
