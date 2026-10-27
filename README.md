@@ -105,7 +105,7 @@ Safety is what lets it act alone: suppliers sign their own payout address, the v
 | | |
 | --- | --- |
 | **Live app** | https://arcsteward.vercel.app/earlypay (Arc testnet) |
-| **Demo video** | https://youtu.be/e9RG-Uaeqkw |
+| **Original EarlyPay demo (pre-existing work)** | https://youtu.be/e9RG-Uaeqkw |
 | **Supplier page** (phone) | https://arcsteward.vercel.app/earlypay/supplier |
 | **Company page** | https://arcsteward.vercel.app/earlypay/buyer |
 | **Public audit** | https://arcsteward.vercel.app/earlypay/audit |
