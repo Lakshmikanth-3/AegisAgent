@@ -1,0 +1,2 @@
+invoice_number,supplier_id,po_number,status,payment_reference
+INV-PAID-001,0x00000000000000000000000000000000000000a1,PO-1001,PAID,synthetic-previous-payment

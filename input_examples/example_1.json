@@ -1,0 +1,10 @@
+{
+  "invoiceNumber": "INV-NEW-001",
+  "supplierId": "0x00000000000000000000000000000000000000a1",
+  "poNumber": "PO-1001",
+  "amountUsdc": "1000",
+  "discountBps": 200,
+  "daysEarly": 60,
+  "payoutAddress": "0x00000000000000000000000000000000000000a1",
+  "notes": "Components shipment, goods received."
+}

@@ -1,0 +1,398 @@
+{
+  "ok": true,
+  "runId": "43012412-8dc0-407f-a976-8a8d0995d3f7",
+  "mode": "sample",
+  "auditTrail": [
+    {
+      "step": "Federated ERP Reconciliation",
+      "source": "Cached synthetic exports (sample mode)",
+      "status": "FLAGGED",
+      "details": "5 queries across AEGIS_REGISTRY, AEGIS_ERP and AEGIS_TREASURY. Purchase-order evidence is missing or ambiguous. Assessment only; chain signatures are not verified by this endpoint."
+    },
+    {
+      "step": "Deterministic Policy",
+      "source": "Deterministic Policy Guardrail",
+      "status": "FLAGGED",
+      "details": "Payout 980 USDC; per-payment limit 5000 USDC; application cap 5000 USDC; remaining budget 15000 USDC; daily remaining 10000 USDC; vault balance 20000 USDC; runway 19020 USDC vs buffer 2000 USDC. Purchase-order evidence is missing or ambiguous."
+    },
+    {
+      "step": "Yield vs Holding Cost",
+      "source": "Deterministic Treasury Math",
+      "status": "FLAGGED",
+      "details": "Discount APR 12.17% vs hurdle 6.50%; holding earnings 7.249315 USDC. Needs the owner: Purchase-order evidence is missing or ambiguous."
+    },
+    {
+      "step": "LLM Reasoning",
+      "source": "LLM provider",
+      "status": "FLAGGED",
+      "details": "No LLM configured; deterministic policy used."
+    }
+  ],
+  "decision": "ESCALATE",
+  "reason": "Needs the owner: Purchase-order evidence is missing or ambiguous.",
+  "source": "policy",
+  "policyDecision": "ESCALATE",
+  "context": {
+    "invoiceHash": "0xf3139d569cdefc62715665f70000abb36e0796562c2d8e71722f0cdeea864bdd",
+    "supplier": "0x00000000000000000000000000000000000000a1",
+    "payoutAddress": "0x00000000000000000000000000000000000000a1",
+    "invoiceNumber": "INV-UNKNOWN-PO",
+    "face": "1000",
+    "discountBps": 200,
+    "discount": "20",
+    "payout": "980",
+    "daysEarly": 60,
+    "discountAprBps": 1217,
+    "holdYieldBps": 450,
+    "holdYieldSource": "simulated",
+    "hurdleAprBps": 650,
+    "holdEarnings": "7.249315",
+    "vaultBalance": "20000",
+    "obligations30d": "0",
+    "runwayAfter": "19020",
+    "liquidityBuffer": "2000",
+    "liquidityOk": true,
+    "proposedDiscountBps": 107,
+    "flags": [
+      {
+        "code": "MISSING_PO",
+        "severity": "escalate",
+        "detail": "Purchase-order evidence is missing or ambiguous."
+      }
+    ]
+  },
+  "payoutUnits": "980000000",
+  "evidence": {
+    "supplier": [
+      {
+        "supplier_id": "0x00000000000000000000000000000000000000a1",
+        "name": "Acme Components",
+        "payout_address": "0x00000000000000000000000000000000000000a1",
+        "approved": "true"
+      }
+    ],
+    "purchaseOrder": [],
+    "priorInvoices": [],
+    "treasury": [
+      {
+        "treasury_id": "main",
+        "balance_usdc": "20000",
+        "liquidity_buffer_usdc": "2000",
+        "max_payment_usdc": "5000",
+        "daily_remaining_usdc": "10000",
+        "remaining_budget_usdc": "15000",
+        "hold_yield_bps": "450"
+      }
+    ],
+    "queries": [
+      {
+        "source": "sample-cache",
+        "sql": "SELECT * FROM AEGIS_REGISTRY.suppliers WHERE lower(supplier_id) = lower('0x00000000000000000000000000000000000000a1')",
+        "rows": [
+          {
+            "supplier_id": "0x00000000000000000000000000000000000000a1",
+            "name": "Acme Components",
+            "payout_address": "0x00000000000000000000000000000000000000a1",
+            "approved": "true"
+          }
+        ],
+        "requestId": "1706a526-4fed-47ad-a14c-5ce292881c1d",
+        "durationMs": 0
+      },
+      {
+        "source": "sample-cache",
+        "sql": "SELECT * FROM AEGIS_ERP.purchase_orders WHERE po_number = 'PO-NOT-FOUND' AND lower(supplier_id) = lower('0x00000000000000000000000000000000000000a1')",
+        "rows": [],
+        "requestId": "9ec71abe-22e2-4a55-9129-cd450ed58014",
+        "durationMs": 0
+      },
+      {
+        "source": "sample-cache",
+        "sql": "SELECT * FROM AEGIS_ERP.invoices WHERE invoice_number = 'INV-UNKNOWN-PO'",
+        "rows": [],
+        "requestId": "d40bd422-24dc-4a4c-8fda-b88eefa403f2",
+        "durationMs": 0
+      },
+      {
+        "source": "sample-cache",
+        "sql": "SELECT * FROM AEGIS_TREASURY.balances WHERE treasury_id = 'main'",
+        "rows": [
+          {
+            "treasury_id": "main",
+            "balance_usdc": "20000",
+            "liquidity_buffer_usdc": "2000",
+            "max_payment_usdc": "5000",
+            "daily_remaining_usdc": "10000",
+            "remaining_budget_usdc": "15000",
+            "hold_yield_bps": "450"
+          }
+        ],
+        "requestId": "f744c37f-7fd9-44e0-8da8-c25ade3a4eb9",
+        "durationMs": 0
+      },
+      {
+        "source": "sample-cache",
+        "sql": "SELECT * FROM AEGIS_ERP.purchase_orders WHERE po_number = 'PO-NOT-FOUND'",
+        "rows": [],
+        "requestId": "43012412-8dc0-407f-a976-8a8d0995d3f7-retry",
+        "durationMs": 0
+      }
+    ]
+  },
+  "world": {
+    "engine": "Meterless World Model",
+    "entityId": "invoice:aegis:INV-UNKNOWN-PO",
+    "events": 7,
+    "audit": [
+      {
+        "seq": 1,
+        "at": "2026-10-27T16:16:21.312Z",
+        "kind": "upsertEntity",
+        "actor": "ReconcilerAgent",
+        "summary": "invoice:aegis:INV-UNKNOWN-PO (invoice)",
+        "eventId": "evt_1",
+        "runId": "43012412-8dc0-407f-a976-8a8d0995d3f7"
+      },
+      {
+        "seq": 2,
+        "at": "2026-10-27T16:16:21.312Z",
+        "kind": "upsertEntity",
+        "actor": "ReconcilerAgent",
+        "summary": "supplier:registry:0x00000000000000000000000000000000000000a1 (supplier)",
+        "eventId": "evt_2",
+        "runId": "43012412-8dc0-407f-a976-8a8d0995d3f7"
+      },
+      {
+        "seq": 3,
+        "at": "2026-10-27T16:16:21.312Z",
+        "kind": "relate",
+        "actor": "ReconcilerAgent",
+        "summary": "invoice:aegis:INV-UNKNOWN-PO -[payable-to]-> supplier:registry:0x00000000000000000000000000000000000000a1",
+        "eventId": "evt_3",
+        "runId": "43012412-8dc0-407f-a976-8a8d0995d3f7"
+      },
+      {
+        "seq": 4,
+        "at": "2026-10-27T16:16:21.312Z",
+        "kind": "assertFact",
+        "actor": "ReconcilerAgent",
+        "summary": "invoice:aegis:INV-UNKNOWN-PO.evidence = {\"supplier\":[{\"supplier_id\":\"0x00000000000000000000000000000000000000a1\",\"name\":\"Acme Components\",\"payout_address\":\"0x00000000000000000000000000000000000000a1\",\"approved\":\"true\"}],\"purchaseOrder\":[],\"priorInvoices\":[],\"treasury\":[{\"treasury_id\":\"main\",\"balance_usdc\":\"20000\",\"liquidity_buffer_usdc\":\"2000\",\"max_payment_usdc\":\"5000\",\"daily_remaining_usdc\":\"10000\",\"remaining_budget_usdc\":\"15000\",\"hold_yield_bps\":\"450\"}],\"queries\":[{\"source\":\"sample-cache\",\"sql\":\"SELECT * FROM AEGIS_REGISTRY.suppliers WHERE lower(supplier_id) = lower('0x00000000000000000000000000000000000000a1')\",\"rows\":[{\"supplier_id\":\"0x00000000000000000000000000000000000000a1\",\"name\":\"Acme Components\",\"payout_address\":\"0x00000000000000000000000000000000000000a1\",\"approved\":\"true\"}],\"requestId\":\"1706a526-4fed-47ad-a14c-5ce292881c1d\",\"durationMs\":0},{\"source\":\"sample-cache\",\"sql\":\"SELECT * FROM AEGIS_ERP.purchase_orders WHERE po_number = 'PO-NOT-FOUND' AND lower(supplier_id) = lower('0x00000000000000000000000000000000000000a1')\",\"rows\":[],\"requestId\":\"9ec71abe-22e2-4a55-9129-cd450ed58014\",\"durationMs\":0},{\"source\":\"sample-cache\",\"sql\":\"SELECT * FROM AEGIS_ERP.invoices WHERE invoice_number = 'INV-UNKNOWN-PO'\",\"rows\":[],\"requestId\":\"d40bd422-24dc-4a4c-8fda-b88eefa403f2\",\"durationMs\":0},{\"source\":\"sample-cache\",\"sql\":\"SELECT * FROM AEGIS_TREASURY.balances WHERE treasury_id = 'main'\",\"rows\":[{\"treasury_id\":\"main\",\"balance_usdc\":\"20000\",\"liquidity_buffer_usdc\":\"2000\",\"max_payment_usdc\":\"5000\",\"daily_remaining_usdc\":\"10000\",\"remaining_budget_usdc\":\"15000\",\"hold_yield_bps\":\"450\"}],\"requestId\":\"f744c37f-7fd9-44e0-8da8-c25ade3a4eb9\",\"durationMs\":0}]} (most-recent-wins)",
+        "eventId": "evt_4",
+        "runId": "43012412-8dc0-407f-a976-8a8d0995d3f7"
+      },
+      {
+        "seq": 5,
+        "at": "2026-10-27T16:16:21.339Z",
+        "kind": "assertFact",
+        "actor": "ReconcilerAgent",
+        "summary": "invoice:aegis:INV-UNKNOWN-PO.evidence = {\"supplier\":[{\"supplier_id\":\"0x00000000000000000000000000000000000000a1\",\"name\":\"Acme Components\",\"payout_address\":\"0x00000000000000000000000000000000000000a1\",\"approved\":\"true\"}],\"purchaseOrder\":[],\"priorInvoices\":[],\"treasury\":[{\"treasury_id\":\"main\",\"balance_usdc\":\"20000\",\"liquidity_buffer_usdc\":\"2000\",\"max_payment_usdc\":\"5000\",\"daily_remaining_usdc\":\"10000\",\"remaining_budget_usdc\":\"15000\",\"hold_yield_bps\":\"450\"}],\"queries\":[{\"source\":\"sample-cache\",\"sql\":\"SELECT * FROM AEGIS_REGISTRY.suppliers WHERE lower(supplier_id) = lower('0x00000000000000000000000000000000000000a1')\",\"rows\":[{\"supplier_id\":\"0x00000000000000000000000000000000000000a1\",\"name\":\"Acme Components\",\"payout_address\":\"0x00000000000000000000000000000000000000a1\",\"approved\":\"true\"}],\"requestId\":\"1706a526-4fed-47ad-a14c-5ce292881c1d\",\"durationMs\":0},{\"source\":\"sample-cache\",\"sql\":\"SELECT * FROM AEGIS_ERP.purchase_orders WHERE po_number = 'PO-NOT-FOUND' AND lower(supplier_id) = lower('0x00000000000000000000000000000000000000a1')\",\"rows\":[],\"requestId\":\"9ec71abe-22e2-4a55-9129-cd450ed58014\",\"durationMs\":0},{\"source\":\"sample-cache\",\"sql\":\"SELECT * FROM AEGIS_ERP.invoices WHERE invoice_number = 'INV-UNKNOWN-PO'\",\"rows\":[],\"requestId\":\"d40bd422-24dc-4a4c-8fda-b88eefa403f2\",\"durationMs\":0},{\"source\":\"sample-cache\",\"sql\":\"SELECT * FROM AEGIS_TREASURY.balances WHERE treasury_id = 'main'\",\"rows\":[{\"treasury_id\":\"main\",\"balance_usdc\":\"20000\",\"liquidity_buffer_usdc\":\"2000\",\"max_payment_usdc\":\"5000\",\"daily_remaining_usdc\":\"10000\",\"remaining_budget_usdc\":\"15000\",\"hold_yield_bps\":\"450\"}],\"requestId\":\"f744c37f-7fd9-44e0-8da8-c25ade3a4eb9\",\"durationMs\":0},{\"source\":\"sample-cache\",\"sql\":\"SELECT * FROM AEGIS_ERP.purchase_orders WHERE po_number = 'PO-NOT-FOUND'\",\"rows\":[],\"requestId\":\"43012412-8dc0-407f-a976-8a8d0995d3f7-retry\",\"durationMs\":0}]} (most-recent-wins)",
+        "eventId": "evt_5",
+        "runId": "43012412-8dc0-407f-a976-8a8d0995d3f7"
+      },
+      {
+        "seq": 6,
+        "at": "2026-10-27T16:16:21.353Z",
+        "kind": "assertFact",
+        "actor": "PolicyCriticAgent",
+        "summary": "invoice:aegis:INV-UNKNOWN-PO.riskFlags = [{\"code\":\"MISSING_PO\",\"severity\":\"escalate\",\"detail\":\"Purchase-order evidence is missing or ambiguous.\"}] (most-recent-wins)",
+        "eventId": "evt_6",
+        "runId": "43012412-8dc0-407f-a976-8a8d0995d3f7"
+      },
+      {
+        "seq": 7,
+        "at": "2026-10-27T16:16:21.366Z",
+        "kind": "assertFact",
+        "actor": "TreasuryReasonerAgent",
+        "summary": "invoice:aegis:INV-UNKNOWN-PO.decision = \"ESCALATE\" (most-recent-wins)",
+        "eventId": "evt_7",
+        "runId": "43012412-8dc0-407f-a976-8a8d0995d3f7"
+      }
+    ]
+  },
+  "trace": [
+    {
+      "timestamp": "2026-10-27T16:16:21.312Z",
+      "runId": "43012412-8dc0-407f-a976-8a8d0995d3f7",
+      "inputHash": "2d06f5651a26f3c10f23ac4a74af5f29bff7749b07af8c2781fdb1b1c7919a52",
+      "agent_name": "PlannerAgent",
+      "action": "delegate",
+      "target_agent": "ReconcilerAgent",
+      "status": "running",
+      "details": {
+        "task": "Reconcile invoice against registry, ERP and treasury",
+        "mode": "sample"
+      }
+    },
+    {
+      "timestamp": "2026-10-27T16:16:21.332Z",
+      "runId": "43012412-8dc0-407f-a976-8a8d0995d3f7",
+      "inputHash": "2d06f5651a26f3c10f23ac4a74af5f29bff7749b07af8c2781fdb1b1c7919a52",
+      "agent_name": "ReconcilerAgent",
+      "action": "query",
+      "status": "success",
+      "details": {
+        "source": "sample-cache",
+        "sql": "SELECT * FROM AEGIS_REGISTRY.suppliers WHERE lower(supplier_id) = lower('0x00000000000000000000000000000000000000a1')",
+        "rows": [
+          {
+            "supplier_id": "0x00000000000000000000000000000000000000a1",
+            "name": "Acme Components",
+            "payout_address": "0x00000000000000000000000000000000000000a1",
+            "approved": "true"
+          }
+        ],
+        "requestId": "1706a526-4fed-47ad-a14c-5ce292881c1d",
+        "durationMs": 0
+      }
+    },
+    {
+      "timestamp": "2026-10-27T16:16:21.333Z",
+      "runId": "43012412-8dc0-407f-a976-8a8d0995d3f7",
+      "inputHash": "2d06f5651a26f3c10f23ac4a74af5f29bff7749b07af8c2781fdb1b1c7919a52",
+      "agent_name": "ReconcilerAgent",
+      "action": "query",
+      "status": "success",
+      "details": {
+        "source": "sample-cache",
+        "sql": "SELECT * FROM AEGIS_ERP.purchase_orders WHERE po_number = 'PO-NOT-FOUND' AND lower(supplier_id) = lower('0x00000000000000000000000000000000000000a1')",
+        "rows": [],
+        "requestId": "9ec71abe-22e2-4a55-9129-cd450ed58014",
+        "durationMs": 0
+      }
+    },
+    {
+      "timestamp": "2026-10-27T16:16:21.334Z",
+      "runId": "43012412-8dc0-407f-a976-8a8d0995d3f7",
+      "inputHash": "2d06f5651a26f3c10f23ac4a74af5f29bff7749b07af8c2781fdb1b1c7919a52",
+      "agent_name": "ReconcilerAgent",
+      "action": "query",
+      "status": "success",
+      "details": {
+        "source": "sample-cache",
+        "sql": "SELECT * FROM AEGIS_ERP.invoices WHERE invoice_number = 'INV-UNKNOWN-PO'",
+        "rows": [],
+        "requestId": "d40bd422-24dc-4a4c-8fda-b88eefa403f2",
+        "durationMs": 0
+      }
+    },
+    {
+      "timestamp": "2026-10-27T16:16:21.337Z",
+      "runId": "43012412-8dc0-407f-a976-8a8d0995d3f7",
+      "inputHash": "2d06f5651a26f3c10f23ac4a74af5f29bff7749b07af8c2781fdb1b1c7919a52",
+      "agent_name": "ReconcilerAgent",
+      "action": "query",
+      "status": "success",
+      "details": {
+        "source": "sample-cache",
+        "sql": "SELECT * FROM AEGIS_TREASURY.balances WHERE treasury_id = 'main'",
+        "rows": [
+          {
+            "treasury_id": "main",
+            "balance_usdc": "20000",
+            "liquidity_buffer_usdc": "2000",
+            "max_payment_usdc": "5000",
+            "daily_remaining_usdc": "10000",
+            "remaining_budget_usdc": "15000",
+            "hold_yield_bps": "450"
+          }
+        ],
+        "requestId": "f744c37f-7fd9-44e0-8da8-c25ade3a4eb9",
+        "durationMs": 0
+      }
+    },
+    {
+      "timestamp": "2026-10-27T16:16:21.338Z",
+      "runId": "43012412-8dc0-407f-a976-8a8d0995d3f7",
+      "inputHash": "2d06f5651a26f3c10f23ac4a74af5f29bff7749b07af8c2781fdb1b1c7919a52",
+      "agent_name": "ReconcilerAgent",
+      "action": "world-model-write",
+      "target_agent": "PolicyCriticAgent",
+      "status": "success",
+      "details": {
+        "engine": "Meterless World Model",
+        "entityId": "invoice:aegis:INV-UNKNOWN-PO",
+        "eventCount": 4
+      }
+    },
+    {
+      "timestamp": "2026-10-27T16:16:21.338Z",
+      "runId": "43012412-8dc0-407f-a976-8a8d0995d3f7",
+      "inputHash": "2d06f5651a26f3c10f23ac4a74af5f29bff7749b07af8c2781fdb1b1c7919a52",
+      "agent_name": "PolicyCriticAgent",
+      "action": "request-revision",
+      "target_agent": "ReconcilerAgent",
+      "status": "needs_revision",
+      "details": {
+        "reason": "Scoped PO lookup was missing or ambiguous. Reconcile by PO identifier alone to detect a supplier conflict."
+      }
+    },
+    {
+      "timestamp": "2026-10-27T16:16:21.352Z",
+      "runId": "43012412-8dc0-407f-a976-8a8d0995d3f7",
+      "inputHash": "2d06f5651a26f3c10f23ac4a74af5f29bff7749b07af8c2781fdb1b1c7919a52",
+      "agent_name": "ReconcilerAgent",
+      "action": "requery",
+      "target_agent": "PolicyCriticAgent",
+      "status": "success",
+      "details": {
+        "source": "sample-cache",
+        "sql": "SELECT * FROM AEGIS_ERP.purchase_orders WHERE po_number = 'PO-NOT-FOUND'",
+        "rows": [],
+        "requestId": "43012412-8dc0-407f-a976-8a8d0995d3f7-retry",
+        "durationMs": 0
+      }
+    },
+    {
+      "timestamp": "2026-10-27T16:16:21.363Z",
+      "runId": "43012412-8dc0-407f-a976-8a8d0995d3f7",
+      "inputHash": "2d06f5651a26f3c10f23ac4a74af5f29bff7749b07af8c2781fdb1b1c7919a52",
+      "agent_name": "PolicyCriticAgent",
+      "action": "critique",
+      "target_agent": "TreasuryReasonerAgent",
+      "status": "flagged",
+      "details": {
+        "flags": [
+          {
+            "code": "MISSING_PO",
+            "severity": "escalate",
+            "detail": "Purchase-order evidence is missing or ambiguous."
+          }
+        ],
+        "engine": "Meterless World Model",
+        "readEntity": "invoice:aegis:INV-UNKNOWN-PO"
+      }
+    },
+    {
+      "timestamp": "2026-10-27T16:16:21.375Z",
+      "runId": "43012412-8dc0-407f-a976-8a8d0995d3f7",
+      "inputHash": "2d06f5651a26f3c10f23ac4a74af5f29bff7749b07af8c2781fdb1b1c7919a52",
+      "agent_name": "TreasuryReasonerAgent",
+      "action": "propose",
+      "target_agent": "PolicyCriticAgent",
+      "status": "success",
+      "details": {
+        "decision": "ESCALATE",
+        "policyCeiling": "ESCALATE",
+        "source": "policy"
+      }
+    },
+    {
+      "timestamp": "2026-10-27T16:16:21.376Z",
+      "runId": "43012412-8dc0-407f-a976-8a8d0995d3f7",
+      "inputHash": "2d06f5651a26f3c10f23ac4a74af5f29bff7749b07af8c2781fdb1b1c7919a52",
+      "agent_name": "PolicyCriticAgent",
+      "action": "validate-final",
+      "status": "success",
+      "details": {
+        "decision": "ESCALATE",
+        "override": null,
+        "reason": "Needs the owner: Purchase-order evidence is missing or ambiguous."
+      }
+    }
+  ],
+  "execution": {
+    "submitted": false,
+    "mode": "assessment-only",
+    "reason": "Use the signed EarlyPay vault workflow for settlement."
+  }
+}

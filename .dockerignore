@@ -1,0 +1,13 @@
+.git
+app/node_modules
+sdk/node_modules
+app/.next
+app/.data
+app/logs
+app/.world
+app/.env*
+!app/.env.example
+app/test-results
+app/playwright-report
+.codex-build
+submission

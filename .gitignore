@@ -1,0 +1,39 @@
+.env
+.env.*
+node_modules/
+app/.env*
+app/node_modules/
+!app/.env.example
+
+move/**/build/
+move/**/.aptos/
+
+walrus.exe
+
+# Rooster integration — local off-chain capability/reconciliation ledger
+app/.data/
+
+.vercel
+.env*.local
+app/tsconfig.tsbuildinfo
+app/playwright-report/
+app/test-results/
+app/.next-arc-ui-test/
+demo/
+sdk/node_modules/
+sdk/dist/
+demo-ready.log
+
+# Local treasury state and runtime traces
+app/.data/
+app/logs/
+app/.world/
+.codex-build/
+
+# Intermediate video captures
+submission/raw/
+
+# Keep published source lean; regenerate contract outputs and keep media local.
+/contracts/arc/artifacts/
+/contracts/arc/deployments/*.png
+/submission/

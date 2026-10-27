@@ -1,0 +1,363 @@
+{
+  "ok": true,
+  "runId": "ecff9e6e-e44c-4b49-8fce-2d133a4bb976",
+  "mode": "sample",
+  "auditTrail": [
+    {
+      "step": "Federated ERP Reconciliation",
+      "source": "Cached synthetic exports (sample mode)",
+      "status": "PASSED",
+      "details": "4 queries across AEGIS_REGISTRY, AEGIS_ERP and AEGIS_TREASURY. Supplier, payout, PO ownership, amount and duplicate checks passed. Assessment only; chain signatures are not verified by this endpoint."
+    },
+    {
+      "step": "Deterministic Policy",
+      "source": "Deterministic Policy Guardrail",
+      "status": "PASSED",
+      "details": "Payout 995 USDC; per-payment limit 5000 USDC; application cap 5000 USDC; remaining budget 15000 USDC; daily remaining 10000 USDC; vault balance 20000 USDC; runway 19005 USDC vs buffer 2000 USDC. "
+    },
+    {
+      "step": "Yield vs Holding Cost",
+      "source": "Deterministic Treasury Math",
+      "status": "FLAGGED",
+      "details": "Discount APR 3.04% vs hurdle 6.50%; holding earnings 7.360273 USDC. A 0.50% discount for paying 60 days early is 3.04% APR, below the 6.50% hurdle (4.50% simulated hold yield + margin). Holding the cash is better. Counter-offer: at 1.07% off the agent pays today."
+    },
+    {
+      "step": "LLM Reasoning",
+      "source": "LLM provider",
+      "status": "FLAGGED",
+      "details": "No LLM configured; deterministic policy used."
+    }
+  ],
+  "decision": "HOLD",
+  "reason": "A 0.50% discount for paying 60 days early is 3.04% APR, below the 6.50% hurdle (4.50% simulated hold yield + margin). Holding the cash is better. Counter-offer: at 1.07% off the agent pays today.",
+  "source": "policy",
+  "policyDecision": "HOLD",
+  "context": {
+    "invoiceHash": "0xc0466da3e84a6d4db3da6b4d32a0ff90ef2973995741ac8013cfe55b11e64d8c",
+    "supplier": "0x00000000000000000000000000000000000000a1",
+    "payoutAddress": "0x00000000000000000000000000000000000000a1",
+    "invoiceNumber": "INV-LOW-YIELD",
+    "face": "1000",
+    "discountBps": 50,
+    "discount": "5",
+    "payout": "995",
+    "daysEarly": 60,
+    "discountAprBps": 304,
+    "holdYieldBps": 450,
+    "holdYieldSource": "simulated",
+    "hurdleAprBps": 650,
+    "holdEarnings": "7.360273",
+    "vaultBalance": "20000",
+    "obligations30d": "0",
+    "runwayAfter": "19005",
+    "liquidityBuffer": "2000",
+    "liquidityOk": true,
+    "proposedDiscountBps": 107,
+    "flags": []
+  },
+  "payoutUnits": "995000000",
+  "evidence": {
+    "supplier": [
+      {
+        "supplier_id": "0x00000000000000000000000000000000000000a1",
+        "name": "Acme Components",
+        "payout_address": "0x00000000000000000000000000000000000000a1",
+        "approved": "true"
+      }
+    ],
+    "purchaseOrder": [
+      {
+        "po_number": "PO-1002",
+        "supplier_id": "0x00000000000000000000000000000000000000a1",
+        "amount_usdc": "1000",
+        "status": "OPEN"
+      }
+    ],
+    "priorInvoices": [],
+    "treasury": [
+      {
+        "treasury_id": "main",
+        "balance_usdc": "20000",
+        "liquidity_buffer_usdc": "2000",
+        "max_payment_usdc": "5000",
+        "daily_remaining_usdc": "10000",
+        "remaining_budget_usdc": "15000",
+        "hold_yield_bps": "450"
+      }
+    ],
+    "queries": [
+      {
+        "source": "sample-cache",
+        "sql": "SELECT * FROM AEGIS_REGISTRY.suppliers WHERE lower(supplier_id) = lower('0x00000000000000000000000000000000000000a1')",
+        "rows": [
+          {
+            "supplier_id": "0x00000000000000000000000000000000000000a1",
+            "name": "Acme Components",
+            "payout_address": "0x00000000000000000000000000000000000000a1",
+            "approved": "true"
+          }
+        ],
+        "requestId": "069bcb9f-abfc-4860-9ab5-d06db58ced48",
+        "durationMs": 0
+      },
+      {
+        "source": "sample-cache",
+        "sql": "SELECT * FROM AEGIS_ERP.purchase_orders WHERE po_number = 'PO-1002' AND lower(supplier_id) = lower('0x00000000000000000000000000000000000000a1')",
+        "rows": [
+          {
+            "po_number": "PO-1002",
+            "supplier_id": "0x00000000000000000000000000000000000000a1",
+            "amount_usdc": "1000",
+            "status": "OPEN"
+          }
+        ],
+        "requestId": "b4b1b5ff-64b3-4ac4-8d2f-774d33cfe982",
+        "durationMs": 0
+      },
+      {
+        "source": "sample-cache",
+        "sql": "SELECT * FROM AEGIS_ERP.invoices WHERE invoice_number = 'INV-LOW-YIELD'",
+        "rows": [],
+        "requestId": "e38b410f-94dc-46cb-bacc-46d862e07d2e",
+        "durationMs": 0
+      },
+      {
+        "source": "sample-cache",
+        "sql": "SELECT * FROM AEGIS_TREASURY.balances WHERE treasury_id = 'main'",
+        "rows": [
+          {
+            "treasury_id": "main",
+            "balance_usdc": "20000",
+            "liquidity_buffer_usdc": "2000",
+            "max_payment_usdc": "5000",
+            "daily_remaining_usdc": "10000",
+            "remaining_budget_usdc": "15000",
+            "hold_yield_bps": "450"
+          }
+        ],
+        "requestId": "ab052581-e28f-43f5-a545-b41cf11351fa",
+        "durationMs": 0
+      }
+    ]
+  },
+  "world": {
+    "engine": "Meterless World Model",
+    "entityId": "invoice:aegis:INV-LOW-YIELD",
+    "events": 6,
+    "audit": [
+      {
+        "seq": 1,
+        "at": "2026-10-27T16:16:21.236Z",
+        "kind": "upsertEntity",
+        "actor": "ReconcilerAgent",
+        "summary": "invoice:aegis:INV-LOW-YIELD (invoice)",
+        "eventId": "evt_1",
+        "runId": "ecff9e6e-e44c-4b49-8fce-2d133a4bb976"
+      },
+      {
+        "seq": 2,
+        "at": "2026-10-27T16:16:21.236Z",
+        "kind": "upsertEntity",
+        "actor": "ReconcilerAgent",
+        "summary": "supplier:registry:0x00000000000000000000000000000000000000a1 (supplier)",
+        "eventId": "evt_2",
+        "runId": "ecff9e6e-e44c-4b49-8fce-2d133a4bb976"
+      },
+      {
+        "seq": 3,
+        "at": "2026-10-27T16:16:21.236Z",
+        "kind": "relate",
+        "actor": "ReconcilerAgent",
+        "summary": "invoice:aegis:INV-LOW-YIELD -[payable-to]-> supplier:registry:0x00000000000000000000000000000000000000a1",
+        "eventId": "evt_3",
+        "runId": "ecff9e6e-e44c-4b49-8fce-2d133a4bb976"
+      },
+      {
+        "seq": 4,
+        "at": "2026-10-27T16:16:21.236Z",
+        "kind": "assertFact",
+        "actor": "ReconcilerAgent",
+        "summary": "invoice:aegis:INV-LOW-YIELD.evidence = {\"supplier\":[{\"supplier_id\":\"0x00000000000000000000000000000000000000a1\",\"name\":\"Acme Components\",\"payout_address\":\"0x00000000000000000000000000000000000000a1\",\"approved\":\"true\"}],\"purchaseOrder\":[{\"po_number\":\"PO-1002\",\"supplier_id\":\"0x00000000000000000000000000000000000000a1\",\"amount_usdc\":\"1000\",\"status\":\"OPEN\"}],\"priorInvoices\":[],\"treasury\":[{\"treasury_id\":\"main\",\"balance_usdc\":\"20000\",\"liquidity_buffer_usdc\":\"2000\",\"max_payment_usdc\":\"5000\",\"daily_remaining_usdc\":\"10000\",\"remaining_budget_usdc\":\"15000\",\"hold_yield_bps\":\"450\"}],\"queries\":[{\"source\":\"sample-cache\",\"sql\":\"SELECT * FROM AEGIS_REGISTRY.suppliers WHERE lower(supplier_id) = lower('0x00000000000000000000000000000000000000a1')\",\"rows\":[{\"supplier_id\":\"0x00000000000000000000000000000000000000a1\",\"name\":\"Acme Components\",\"payout_address\":\"0x00000000000000000000000000000000000000a1\",\"approved\":\"true\"}],\"requestId\":\"069bcb9f-abfc-4860-9ab5-d06db58ced48\",\"durationMs\":0},{\"source\":\"sample-cache\",\"sql\":\"SELECT * FROM AEGIS_ERP.purchase_orders WHERE po_number = 'PO-1002' AND lower(supplier_id) = lower('0x00000000000000000000000000000000000000a1')\",\"rows\":[{\"po_number\":\"PO-1002\",\"supplier_id\":\"0x00000000000000000000000000000000000000a1\",\"amount_usdc\":\"1000\",\"status\":\"OPEN\"}],\"requestId\":\"b4b1b5ff-64b3-4ac4-8d2f-774d33cfe982\",\"durationMs\":0},{\"source\":\"sample-cache\",\"sql\":\"SELECT * FROM AEGIS_ERP.invoices WHERE invoice_number = 'INV-LOW-YIELD'\",\"rows\":[],\"requestId\":\"e38b410f-94dc-46cb-bacc-46d862e07d2e\",\"durationMs\":0},{\"source\":\"sample-cache\",\"sql\":\"SELECT * FROM AEGIS_TREASURY.balances WHERE treasury_id = 'main'\",\"rows\":[{\"treasury_id\":\"main\",\"balance_usdc\":\"20000\",\"liquidity_buffer_usdc\":\"2000\",\"max_payment_usdc\":\"5000\",\"daily_remaining_usdc\":\"10000\",\"remaining_budget_usdc\":\"15000\",\"hold_yield_bps\":\"450\"}],\"requestId\":\"ab052581-e28f-43f5-a545-b41cf11351fa\",\"durationMs\":0}]} (most-recent-wins)",
+        "eventId": "evt_4",
+        "runId": "ecff9e6e-e44c-4b49-8fce-2d133a4bb976"
+      },
+      {
+        "seq": 5,
+        "at": "2026-10-27T16:16:21.256Z",
+        "kind": "assertFact",
+        "actor": "PolicyCriticAgent",
+        "summary": "invoice:aegis:INV-LOW-YIELD.riskFlags = [] (most-recent-wins)",
+        "eventId": "evt_5",
+        "runId": "ecff9e6e-e44c-4b49-8fce-2d133a4bb976"
+      },
+      {
+        "seq": 6,
+        "at": "2026-10-27T16:16:21.264Z",
+        "kind": "assertFact",
+        "actor": "TreasuryReasonerAgent",
+        "summary": "invoice:aegis:INV-LOW-YIELD.decision = \"HOLD\" (most-recent-wins)",
+        "eventId": "evt_6",
+        "runId": "ecff9e6e-e44c-4b49-8fce-2d133a4bb976"
+      }
+    ]
+  },
+  "trace": [
+    {
+      "timestamp": "2026-10-27T16:16:21.236Z",
+      "runId": "ecff9e6e-e44c-4b49-8fce-2d133a4bb976",
+      "inputHash": "0391a9cf89512c58c6baaec9420399c382658bf2d6b1830219cb0c6682a81058",
+      "agent_name": "PlannerAgent",
+      "action": "delegate",
+      "target_agent": "ReconcilerAgent",
+      "status": "running",
+      "details": {
+        "task": "Reconcile invoice against registry, ERP and treasury",
+        "mode": "sample"
+      }
+    },
+    {
+      "timestamp": "2026-10-27T16:16:21.251Z",
+      "runId": "ecff9e6e-e44c-4b49-8fce-2d133a4bb976",
+      "inputHash": "0391a9cf89512c58c6baaec9420399c382658bf2d6b1830219cb0c6682a81058",
+      "agent_name": "ReconcilerAgent",
+      "action": "query",
+      "status": "success",
+      "details": {
+        "source": "sample-cache",
+        "sql": "SELECT * FROM AEGIS_REGISTRY.suppliers WHERE lower(supplier_id) = lower('0x00000000000000000000000000000000000000a1')",
+        "rows": [
+          {
+            "supplier_id": "0x00000000000000000000000000000000000000a1",
+            "name": "Acme Components",
+            "payout_address": "0x00000000000000000000000000000000000000a1",
+            "approved": "true"
+          }
+        ],
+        "requestId": "069bcb9f-abfc-4860-9ab5-d06db58ced48",
+        "durationMs": 0
+      }
+    },
+    {
+      "timestamp": "2026-10-27T16:16:21.253Z",
+      "runId": "ecff9e6e-e44c-4b49-8fce-2d133a4bb976",
+      "inputHash": "0391a9cf89512c58c6baaec9420399c382658bf2d6b1830219cb0c6682a81058",
+      "agent_name": "ReconcilerAgent",
+      "action": "query",
+      "status": "success",
+      "details": {
+        "source": "sample-cache",
+        "sql": "SELECT * FROM AEGIS_ERP.purchase_orders WHERE po_number = 'PO-1002' AND lower(supplier_id) = lower('0x00000000000000000000000000000000000000a1')",
+        "rows": [
+          {
+            "po_number": "PO-1002",
+            "supplier_id": "0x00000000000000000000000000000000000000a1",
+            "amount_usdc": "1000",
+            "status": "OPEN"
+          }
+        ],
+        "requestId": "b4b1b5ff-64b3-4ac4-8d2f-774d33cfe982",
+        "durationMs": 0
+      }
+    },
+    {
+      "timestamp": "2026-10-27T16:16:21.254Z",
+      "runId": "ecff9e6e-e44c-4b49-8fce-2d133a4bb976",
+      "inputHash": "0391a9cf89512c58c6baaec9420399c382658bf2d6b1830219cb0c6682a81058",
+      "agent_name": "ReconcilerAgent",
+      "action": "query",
+      "status": "success",
+      "details": {
+        "source": "sample-cache",
+        "sql": "SELECT * FROM AEGIS_ERP.invoices WHERE invoice_number = 'INV-LOW-YIELD'",
+        "rows": [],
+        "requestId": "e38b410f-94dc-46cb-bacc-46d862e07d2e",
+        "durationMs": 0
+      }
+    },
+    {
+      "timestamp": "2026-10-27T16:16:21.255Z",
+      "runId": "ecff9e6e-e44c-4b49-8fce-2d133a4bb976",
+      "inputHash": "0391a9cf89512c58c6baaec9420399c382658bf2d6b1830219cb0c6682a81058",
+      "agent_name": "ReconcilerAgent",
+      "action": "query",
+      "status": "success",
+      "details": {
+        "source": "sample-cache",
+        "sql": "SELECT * FROM AEGIS_TREASURY.balances WHERE treasury_id = 'main'",
+        "rows": [
+          {
+            "treasury_id": "main",
+            "balance_usdc": "20000",
+            "liquidity_buffer_usdc": "2000",
+            "max_payment_usdc": "5000",
+            "daily_remaining_usdc": "10000",
+            "remaining_budget_usdc": "15000",
+            "hold_yield_bps": "450"
+          }
+        ],
+        "requestId": "ab052581-e28f-43f5-a545-b41cf11351fa",
+        "durationMs": 0
+      }
+    },
+    {
+      "timestamp": "2026-10-27T16:16:21.255Z",
+      "runId": "ecff9e6e-e44c-4b49-8fce-2d133a4bb976",
+      "inputHash": "0391a9cf89512c58c6baaec9420399c382658bf2d6b1830219cb0c6682a81058",
+      "agent_name": "ReconcilerAgent",
+      "action": "world-model-write",
+      "target_agent": "PolicyCriticAgent",
+      "status": "success",
+      "details": {
+        "engine": "Meterless World Model",
+        "entityId": "invoice:aegis:INV-LOW-YIELD",
+        "eventCount": 4
+      }
+    },
+    {
+      "timestamp": "2026-10-27T16:16:21.260Z",
+      "runId": "ecff9e6e-e44c-4b49-8fce-2d133a4bb976",
+      "inputHash": "0391a9cf89512c58c6baaec9420399c382658bf2d6b1830219cb0c6682a81058",
+      "agent_name": "PolicyCriticAgent",
+      "action": "critique",
+      "target_agent": "TreasuryReasonerAgent",
+      "status": "approved",
+      "details": {
+        "flags": [],
+        "engine": "Meterless World Model",
+        "readEntity": "invoice:aegis:INV-LOW-YIELD"
+      }
+    },
+    {
+      "timestamp": "2026-10-27T16:16:21.269Z",
+      "runId": "ecff9e6e-e44c-4b49-8fce-2d133a4bb976",
+      "inputHash": "0391a9cf89512c58c6baaec9420399c382658bf2d6b1830219cb0c6682a81058",
+      "agent_name": "TreasuryReasonerAgent",
+      "action": "propose",
+      "target_agent": "PolicyCriticAgent",
+      "status": "success",
+      "details": {
+        "decision": "HOLD",
+        "policyCeiling": "HOLD",
+        "source": "policy"
+      }
+    },
+    {
+      "timestamp": "2026-10-27T16:16:21.270Z",
+      "runId": "ecff9e6e-e44c-4b49-8fce-2d133a4bb976",
+      "inputHash": "0391a9cf89512c58c6baaec9420399c382658bf2d6b1830219cb0c6682a81058",
+      "agent_name": "PolicyCriticAgent",
+      "action": "validate-final",
+      "status": "success",
+      "details": {
+        "decision": "HOLD",
+        "override": null,
+        "reason": "A 0.50% discount for paying 60 days early is 3.04% APR, below the 6.50% hurdle (4.50% simulated hold yield + margin). Holding the cash is better. Counter-offer: at 1.07% off the agent pays today."
+      }
+    }
+  ],
+  "execution": {
+    "submitted": false,
+    "mode": "assessment-only",
+    "reason": "Use the signed EarlyPay vault workflow for settlement."
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "invoiceNumber": "INV-UNKNOWN-PO",
+  "supplierId": "0x00000000000000000000000000000000000000a1",
+  "poNumber": "PO-NOT-FOUND",
+  "amountUsdc": "1000",
+  "discountBps": 200,
+  "daysEarly": 60,
+  "payoutAddress": "0x00000000000000000000000000000000000000a1",
+  "notes": "Components shipment, goods received."
+}
