@@ -1,6 +1,6 @@
 # AegisAgent
 
-**Live app:** https://aegisagent-ai.vercel.app/treasury (sample mode) · [Public repository](https://github.com/Lakshmikanth-3/AegisAgent)
+**Live app:** https://aegisagent-ai.vercel.app · [Treasury review](https://aegisagent-ai.vercel.app/treasury) (sample mode on the hosted site; live Zetaris + Nightshift locally) · [Owner console](https://aegisagent-ai.vercel.app/arc) · [Public repository](https://github.com/Lakshmikanth-3/AegisAgent)
 
 **Autonomous Enterprise Treasury & Policy Guardrail Agent**
 
