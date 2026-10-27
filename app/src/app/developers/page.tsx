@@ -30,7 +30,7 @@ export default function DevelopersPage() {
     <div className="arc-info-grid">
       <section className="full-width"><div className="arc-panel-head"><span className="arc-panel-icon"><Code2 size={18} /></span><div><h2>Agent SDK quickstart</h2><p>@aegisagent/arc-sdk · TypeScript · viem</p></div></div><pre className="arc-code">{sdk}</pre>
         <p>The agent key can only call <code>pay()</code> and <code>topUpGas()</code>. <code>check()</code> previews a payment against the live contract; <code>ensureGas()</code> refills the agent&apos;s gas from its allowance; <code>invoiceId()</code> hashes an order so it can never be paid twice.</p></section>
-      <section><div className="arc-panel-head"><span className="arc-panel-icon"><Route size={18} /></span><div><h2>HTTP 402 pay-per-request</h2><p>x402-style, scheme velo402-vault</p></div></div><ol className="arc-flow">
+      <section><div className="arc-panel-head"><span className="arc-panel-icon"><Route size={18} /></span><div><h2>HTTP 402 pay-per-request</h2><p>x402-style, paid from the agent vault</p></div></div><ol className="arc-flow">
         <li>The agent calls a paid endpoint and gets <code>402</code> with an invoice, price and merchant address.</li>
         <li>It pays from the vault with <code>paymentId = keccak256(invoice)</code>. The vault enforces the owner&apos;s policy.</li>
         <li>It retries with an <code>X-PAYMENT</code> header holding the transaction hash.</li>
