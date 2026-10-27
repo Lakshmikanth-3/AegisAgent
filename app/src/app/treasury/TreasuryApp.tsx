@@ -26,7 +26,7 @@ export default function TreasuryApp({ sample }: { sample: boolean }) {
     finally { setBusy(false); }
   }
   return <div className="treasury-app">
-    <header className="tr-nav"><Link className="tr-brand" href="/treasury"><ShieldCheck size={25} /> AegisAgent</Link><div><span className="tr-mode">{sample ? 'Sample mode' : 'Live connections'}</span></div></header>
+    <header className="tr-nav"><Link className="tr-brand" href="/"><ShieldCheck size={25} /> AegisAgent</Link><div><Link href="/earlypay">EarlyPay settlement</Link><span className="tr-mode">{sample ? 'Sample mode' : 'Live connections'}</span></div></header>
     <main className="tr-main">
       <div className="tr-intro"><span className="tr-eyebrow">TREASURY REVIEW</span><h1>A good deal.<br /><em>A defensible decision.</em></h1><p>Reconcile the invoice, question the evidence, and inspect the policy before payment.</p></div>
       <div className="tr-strip"><span><Database size={16} /> {sample ? 'Cached enterprise exports' : 'Zetaris data layer'}</span><span><Activity size={16} /> Meterless World Model</span><span><ShieldCheck size={16} /> {sample ? 'Deterministic reasoning' : 'Nemotron through Nightshift'}</span></div>
@@ -46,7 +46,7 @@ export default function TreasuryApp({ sample }: { sample: boolean }) {
           <div className="tr-result-foot"><span>Run {result.runId.slice(0, 8)}</span><button onClick={() => { const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([JSON.stringify(result, null, 2)], { type: 'application/json' })); a.download = `aegis-review-${result.runId}.json`; a.click(); URL.revokeObjectURL(a.href); }}>Download full review</button></div>
         </>}
       </section></div>
-      <footer className="tr-footer"><span>AegisAgent — Autonomous Enterprise Treasury & Policy Guardrail Agent</span><a href="https://github.com/Lakshmikanth-3/AegisAgent">Source on GitHub ↗</a></footer>
+      <footer className="tr-footer"><span>AegisAgent — Autonomous Enterprise Treasury & Policy Guardrail Agent</span><Link href="/earlypay/audit">On-chain settlement audit ↗</Link></footer>
     </main>
   </div>;
 }
